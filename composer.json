@@ -1,0 +1,17 @@
+{
+    "name": "faresmts/safewords",
+    "description": "a lib for filtering bad words from strings",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Faresmts\\SafeWords\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "matheus fares",
+            "email": "matheusfares@alu.ufc.br"
+        }
+    ]
+}
