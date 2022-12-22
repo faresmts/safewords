@@ -3,6 +3,13 @@
 namespace Faresmts\SafeWords;
 
 use Faresmts\SafeWords\Exceptions\InvalidMethodCall;
+use Illuminate\Support\Str;
+
+/**
+ * TODO Criar filtro para Leet Lang
+ * TODO Achar palavrões em PT-BR
+ * 
+ */
 
 class SafeWords
 {
@@ -25,7 +32,8 @@ class SafeWords
 
     public function __construct (string $text)
     {   
-        $this->text = explode(' ', $text);
+        $unleetText = $this->leetTransform($text);
+        $this->text = explode(' ', $unleetText);
         $this->badWords = (array) include 'BadWords.php';
     }
 
@@ -40,7 +48,7 @@ class SafeWords
         foreach($this->text as $key => $word) {   
             
             if(in_array($word, $this->badWords)) {
-
+                Str::contains($this->badWords, $word);
                 $replaceAmount = strlen($word);
                 $fullReplace = '';
                 
@@ -59,7 +67,7 @@ class SafeWords
         return $this;
     }
 
-    public function verify(): self
+    public function isSafe(): self
     {
         if($this->replace){
             throw InvalidMethodCall::thisMethodCallIsNotValid();
@@ -79,6 +87,23 @@ class SafeWords
     public function get(): bool | string
     {
         return $this->verify ? $this->isSafe : $this->safeText;
+    }
+
+    private function leetTransform(string $text): string
+    {
+        $leet = (array) include 'Leet.php';
+
+        $letters = str_split($text);
+        
+        foreach ($leet as $key => $value){
+            
+            var_dump($letters);exit;
+            
+
+        }        
+        
+        
+        return $unleetText;
     }
 
 }
