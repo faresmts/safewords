@@ -5,7 +5,6 @@ namespace Faresmts\SafeWords;
 use Faresmts\SafeWords\Exceptions\InvalidMethodCall;
 
 /**
- * TODO Criar filtro para Leet Lang
  * TODO Achar palavrões em PT-BR
  * 
  */
