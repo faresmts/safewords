@@ -3,7 +3,6 @@
 namespace Faresmts\SafeWords;
 
 use Faresmts\SafeWords\Exceptions\InvalidMethodCall;
-use Illuminate\Support\Str;
 
 /**
  * TODO Criar filtro para Leet Lang
@@ -48,7 +47,7 @@ class SafeWords
         foreach($this->text as $key => $word) {   
             
             if(in_array($word, $this->badWords)) {
-                Str::contains($this->badWords, $word);
+
                 $replaceAmount = strlen($word);
                 $fullReplace = '';
                 
@@ -92,18 +91,12 @@ class SafeWords
     private function leetTransform(string $text): string
     {
         $leet = (array) include 'Leet.php';
-
-        $letters = str_split($text);
         
-        foreach ($leet as $key => $value){
-            
-            var_dump($letters);exit;
-            
-
+        foreach ($leet as $leet => $letterEquivalent){
+            $text = str_replace($leet, $letterEquivalent, $text);        
         }        
-        
-        
-        return $unleetText;
+    
+        return $text;
     }
 
 }
