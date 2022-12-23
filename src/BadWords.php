@@ -1706,5 +1706,4 @@ return [
         'zoophilia',
         'zubb',
         //PT-BR
-        
 ];
