@@ -4,11 +4,6 @@ namespace Faresmts\SafeWords;
 
 use Faresmts\SafeWords\Exceptions\InvalidMethodCall;
 
-/**
- * TODO Achar palavrões em PT-BR
- * 
- */
-
 class SafeWords
 {
     protected array $text;
@@ -16,6 +11,12 @@ class SafeWords
     protected bool $isSafe = true;
 
     protected array $badWords;
+
+    protected array $leet;
+
+    protected array $charsWithAccents;
+    
+    protected array $charsWithoutAccents;
 
     protected string $safeText;
 
@@ -30,9 +31,14 @@ class SafeWords
 
     public function __construct (string $text)
     {   
-        $unleetText = $this->leetTransform($text);
-        $this->text = explode(' ', $unleetText);
         $this->badWords = (array) include 'Resources/BadWords.php';
+        $this->leet = (array) include 'Resources/Leet.php';
+        $this->charsWithAccents = (array) include 'Resources/CharsWithAccents.php';
+        $this->charsWithoutAccents = (array) include 'Resources/CharsWithoutAccents.php';
+
+        $textWhitoutAccent = $this->removeAccent($text);
+        $unleetText = $this->leetTransform($textWhitoutAccent);
+        $this->text = explode(' ', $unleetText);
     }
 
     public function replace(string $replace = '*'): self
@@ -60,7 +66,6 @@ class SafeWords
         }   
 
         $this->safeText = implode(' ', $this->text);
-        
 
         return $this;
     }
@@ -88,14 +93,17 @@ class SafeWords
     }
 
     private function leetTransform(string $text): string
-    {
-        $leet = (array) include 'Resources/Leet.php';
-        
-        foreach ($leet as $leet => $letterEquivalent){
+    {   
+        foreach ($this->leet as $leet => $letterEquivalent){
             $text = str_replace($leet, $letterEquivalent, $text);        
         }        
     
         return $text;
+    }
+
+    private function removeAccent(string $text): string
+    {
+        return str_replace($this->charsWithAccents, $this->charsWithoutAccents, $text);
     }
 
 }
