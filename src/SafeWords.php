@@ -32,7 +32,7 @@ class SafeWords
     {   
         $unleetText = $this->leetTransform($text);
         $this->text = explode(' ', $unleetText);
-        $this->badWords = (array) include 'BadWords.php';
+        $this->badWords = (array) include 'Resources/BadWords.php';
     }
 
     public function replace(string $replace = '*'): self
@@ -89,7 +89,7 @@ class SafeWords
 
     private function leetTransform(string $text): string
     {
-        $leet = (array) include 'Leet.php';
+        $leet = (array) include 'Resources/Leet.php';
         
         foreach ($leet as $leet => $letterEquivalent){
             $text = str_replace($leet, $letterEquivalent, $text);        
