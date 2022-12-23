@@ -29,8 +29,8 @@ class SafeWords
         return (new static($text));
     }
 
-    public function __construct (string $text)
-    {   
+    public function __construct(string $text)
+    {
         $this->badWords = (array) include 'Resources/BadWords.php';
         $this->leet = (array) include 'Resources/Leet.php';
         $this->charsWithAccents = (array) include 'Resources/CharsWithAccents.php';
@@ -43,27 +43,25 @@ class SafeWords
 
     public function replace(string $replace = '*'): self
     {
-        if($this->verify){
+        if ($this->verify) {
             throw InvalidMethodCall::thisMethodCallIsNotValid();
         }
         
         $this->replace = true;
 
-        foreach($this->text as $key => $word) {   
-            
-            if(in_array($word, $this->badWords)) {
-
+        foreach ($this->text as $key => $word) {
+            if (in_array($word, $this->badWords)) {
                 $replaceAmount = strlen($word);
                 $fullReplace = '';
                 
-                for ($i = 0; $i < $replaceAmount; $i++){
-                    $fullReplace = $fullReplace.$replace ;
+                for ($i = 0; $i < $replaceAmount; $i++) {
+                    $fullReplace = $fullReplace . $replace ;
                 }
 
                 $safeWord = str_replace($word, $fullReplace, $word);
                 $this->text[$key] = $safeWord;
             }
-        }   
+        }
 
         $this->safeText = implode(' ', $this->text);
 
@@ -72,14 +70,14 @@ class SafeWords
 
     public function isSafe(): self
     {
-        if($this->replace){
+        if ($this->replace) {
             throw InvalidMethodCall::thisMethodCallIsNotValid();
         }
 
         $this->verify = true;
 
-        foreach($this->text as $word) {  
-            if(in_array($word, $this->badWords)) {
+        foreach ($this->text as $word) {
+            if (in_array($word, $this->badWords)) {
                 $this->isSafe = false;
             }
         }
@@ -93,11 +91,11 @@ class SafeWords
     }
 
     private function leetTransform(string $text): string
-    {   
-        foreach ($this->leet as $leet => $letterEquivalent){
-            $text = str_replace($leet, $letterEquivalent, $text);        
-        }        
-    
+    {
+        foreach ($this->leet as $leet => $letterEquivalent) {
+            $text = str_replace($leet, $letterEquivalent, $text);
+        }
+
         return $text;
     }
 
@@ -105,5 +103,4 @@ class SafeWords
     {
         return str_replace($this->charsWithAccents, $this->charsWithoutAccents, $text);
     }
-
 }

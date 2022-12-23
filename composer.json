@@ -1,8 +1,11 @@
 {
     "name": "faresmts/safewords",
-    "description": "a lib for filtering bad words from strings",
+    "description": "a PHP lib for filtering bad words from strings",
     "type": "library",
     "license": "MIT",
+    "require": {
+        "php": ">=8.0"
+    },
     "autoload": {
         "psr-4": {
             "Faresmts\\SafeWords\\": "src/"
