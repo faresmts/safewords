@@ -37,7 +37,7 @@ $censoredText = SafeWords::filter($text)
 
 `get()`: get the result of the chosen method.
 
-Obs.: the methods `isSafe()` and `replace()` cannot be called at the same time, throwing an exception.
+Obs.: the methods `isSafe()` and `replace()` cannot be called at the same time, throwing an exception if this happens.
 
 
 
