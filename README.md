@@ -22,12 +22,23 @@ $isSafe = SafeWords::filter($text)
 ```
 And this is the way to call a safewords censor:
 ```
-$isSafe = SafeWords::filter($text)
-            ->replace()
-            ->get();
+$censoredText = SafeWords::filter($text)
+                       ->replace()
+                       ->get();
 ```
 
-### filter() ->
+### Functions
+
+`filter($text)`: add the text you want to check.
+
+`isSafe()`: method that evaluates whether the text is safe.
+
+`replace($string)`: method that replaces each character of the bad word with the variable inside $string. Default is '*'.
+
+`get()`: get the result of the chosen method.
+
+Obs.: the methods `isSafe()` and `replace()` cannot be called at the same time, throwing an exception.
+
 
 
 
