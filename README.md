@@ -38,7 +38,6 @@ $censoredText = SafeWords::filter($text)
                     ->useDictionary(['foo', 'bar'])
                     ->replace()
                     ->get();
-
 ```
 
 ### Functions
