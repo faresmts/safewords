@@ -16,5 +16,11 @@
             "name": "matheus fares",
             "email": "matheusfares@alu.ufc.br"
         }
-    ]
+    ],
+    "scripts": {
+        "cs" : "phpcs --standard=PSR12 src/"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.7"
+    }
 }
