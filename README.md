@@ -23,21 +23,41 @@ $isSafe = SafeWords::filter($text)
 And this is the way to call a safewords censor:
 ```
 $censoredText = SafeWords::filter($text)
-                       ->replace()
-                       ->get();
+                   ->replace()
+                   ->get();
+```
+
+Both methods can be called with useDictionary() function to add new words to block:
+```
+$isSafe = SafeWords::filter($text)
+            ->useDictionary(['foo', 'bar'])
+            ->isSafe()
+            ->get();
+
+$censoredText = SafeWords::filter($text)
+                    ->replace()
+                    ->useDictionary(['foo', 'bar'])
+                    ->get();
+
 ```
 
 ### Functions
 
-`filter($text)`: add the text you want to check.
+`filter(string $text)`: add the text you want to check.
+
+`useDictionary(array $userBadWords)`: add the words you want to block in SafeWords checker. 
 
 `isSafe()`: method that evaluates whether the text is safe.
 
-`replace($string)`: method that replaces each character of the bad word with the variable inside $string. Default is '*'.
+`replace(string $replace = '*')`: method that replaces each character of the bad word with the variable inside $string. Default is '*'.
 
 `get()`: get the result of the chosen method.
 
-Obs.: the methods `isSafe()` and `replace()` cannot be called at the same time, throwing an exception if this happens.
+### Exceptions
+
+- The methods `isSafe()` and `replace()` cannot be called at the same time, throwing an exception if this happens.
+
+- The method `useDictionary()` cannot be called after the `isSafe()` or `replace()`. It must be called before. 
 
 
 
