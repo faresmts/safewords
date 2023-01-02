@@ -43,15 +43,15 @@ $censoredText = SafeWords::filter($text)
 
 ### Functions
 
-`filter(string $text)`: add the text you want to check.
+- `filter(string $text)`: add the text you want to check.
 
-`useDictionary(array $userBadWords)`: add the words you want to block in SafeWords checker. 
+- `useDictionary(array $userBadWords)`: add the words you want to block in SafeWords checker. 
 
-`isSafe()`: method that evaluates whether the text is safe.
+- `isSafe()`: method that evaluates whether the text is safe.
 
-`replace(string $replace = '*')`: method that replaces each character of the bad word with the variable inside $string. Default is '*'.
+- `replace(string $replace = '*')`: method that replaces each character of the bad word with the variable inside $string. Default is '*'.
 
-`get()`: get the result of the chosen method.
+- `get()`: get the result of the chosen method.
 
 ### Exceptions
 
