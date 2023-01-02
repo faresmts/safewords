@@ -20,6 +20,10 @@ class SafeWords
 
     protected string $safeText;
 
+    protected array $userBadWords = [];
+
+    protected bool $usingExternalBadWords;
+
     protected bool $verify = false;
 
     protected bool $replace = false;
@@ -50,7 +54,7 @@ class SafeWords
         $this->replace = true;
 
         foreach ($this->text as $key => $word) {
-            if (in_array($word, $this->badWords)) {
+            if (in_array($word, $this->badWords) || in_array($word, $this->userBadWords)) {
                 $replaceAmount = strlen($word);
                 $fullReplace = '';
                 
@@ -77,12 +81,25 @@ class SafeWords
         $this->verify = true;
 
         foreach ($this->text as $word) {
-            if (in_array($word, $this->badWords)) {
+            if (in_array($word, $this->badWords) || in_array($word, $this->userBadWords)) {
                 $this->isSafe = false;
             }
         }
 
         return $this;
+    }
+
+    public function useDictionary(array $userBadWords): self
+    {
+        if(! $this->verify && ! $this->replace){
+
+            $this->userBadWords = $userBadWords;
+
+            return $this;
+        }
+
+        throw InvalidMethodCall::useDictionaryAfterVerifyOrReplace();
+
     }
 
     public function get(): bool | string
