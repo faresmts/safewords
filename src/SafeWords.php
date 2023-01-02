@@ -1,5 +1,5 @@
 <?php
- 
+
 namespace Faresmts\SafeWords;
 
 use Faresmts\SafeWords\Exceptions\InvalidMethodCall;
@@ -15,10 +15,14 @@ class SafeWords
     protected array $leet;
 
     protected array $charsWithAccents;
-    
+
     protected array $charsWithoutAccents;
 
     protected string $safeText;
+
+    protected array $userBadWords = [];
+
+    protected bool $usingExternalBadWords;
 
     protected bool $verify = false;
 
@@ -46,14 +50,14 @@ class SafeWords
         if ($this->verify) {
             throw InvalidMethodCall::thisMethodCallIsNotValid();
         }
-        
+
         $this->replace = true;
 
         foreach ($this->text as $key => $word) {
-            if (in_array($word, $this->badWords)) {
+            if (in_array($word, $this->badWords) || in_array($word, $this->userBadWords)) {
                 $replaceAmount = strlen($word);
                 $fullReplace = '';
-                
+
                 for ($i = 0; $i < $replaceAmount; $i++) {
                     $fullReplace = $fullReplace . $replace ;
                 }
@@ -77,12 +81,23 @@ class SafeWords
         $this->verify = true;
 
         foreach ($this->text as $word) {
-            if (in_array($word, $this->badWords)) {
+            if (in_array($word, $this->badWords) || in_array($word, $this->userBadWords)) {
                 $this->isSafe = false;
             }
         }
 
         return $this;
+    }
+
+    public function useDictionary(array $userBadWords): self
+    {
+        if (! $this->verify && ! $this->replace) {
+            $this->userBadWords = $userBadWords;
+
+            return $this;
+        }
+
+        throw InvalidMethodCall::useDictionaryAfterVerifyOrReplace();
     }
 
     public function get(): bool | string
