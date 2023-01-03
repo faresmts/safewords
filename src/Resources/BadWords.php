@@ -1745,6 +1745,7 @@ return [
         'cu',
         'cv',
         'cuzao',
+        'cusao',
         'cvzao',
         'corno',
         'cocaina',

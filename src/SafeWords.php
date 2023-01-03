@@ -18,6 +18,8 @@ class SafeWords
 
     protected array $charsWithoutAccents;
 
+    protected array $punctuations;
+
     protected string $safeText;
 
     protected array $userBadWords = [];
@@ -39,10 +41,12 @@ class SafeWords
         $this->leet = (array) include 'Resources/Leet.php';
         $this->charsWithAccents = (array) include 'Resources/CharsWithAccents.php';
         $this->charsWithoutAccents = (array) include 'Resources/CharsWithoutAccents.php';
+        $this->punctuations = (array) include 'Resources/Punctuations.php';
 
         $textWhitoutAccent = $this->removeAccent($text);
         $unleetText = $this->leetTransform($textWhitoutAccent);
-        $this->text = explode(' ', $unleetText);
+        $textWhitoutPunctuation = $this->removePunctuation($unleetText);
+        $this->text = explode(' ', $textWhitoutPunctuation);
     }
 
     public function replace(string $replace = '*'): self
@@ -117,5 +121,10 @@ class SafeWords
     private function removeAccent(string $text): string
     {
         return str_replace($this->charsWithAccents, $this->charsWithoutAccents, $text);
+    }
+
+    private function removePunctuation(string $text): string
+    {
+        return str_replace($this->punctuations, ' ', $text);
     }
 }
